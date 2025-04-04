@@ -18,3 +18,4 @@ services:
     container_name: "ppdbe-application"
 volumes:
   data:
+    driver: local

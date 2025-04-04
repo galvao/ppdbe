@@ -1,8 +1,10 @@
-CREATE ROLE ppdbe WITH LOGIN ENCRYPTED PASSWORD 'ppdbe1234';
+CREATE ROLE ppdbe WITH CREATEDB LOGIN BYPASSRLS;
+
+\c postgres ppdbe;
 
 CREATE DATABASE ppdbe ENCODING utf8;
 
-\c ppdbe;
+\c ppdbe ppdbe;
 
 CREATE SEQUENCE account_role_id_seq;
 
@@ -91,6 +93,6 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-\c postgres;
+\c postgres postgres;
 
 ALTER DATABASE ppdbe OWNER TO ppdbe;
