@@ -1,0 +1,15 @@
+services:
+  database:
+    build: "pgsql/."
+    restart: "always"
+    ports:
+      - "5433:5432"
+    container_name: "ppdbe-database"
+  application:
+    build: "app/."
+    restart: "always"
+    ports:
+      - "8081:80"
+    depends_on:
+      - "database"
+    container_name: "ppdbe-application"
