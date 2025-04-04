@@ -5,6 +5,8 @@ services:
     restart: "always"
     ports:
       - "5433:5432"
+    volumes:
+      - data:/var/lib/postgresql/data
     container_name: "ppdbe-database"
   application:
     build: "app/."
@@ -14,3 +16,5 @@ services:
     depends_on:
       - "database"
     container_name: "ppdbe-application"
+volumes:
+  data:
