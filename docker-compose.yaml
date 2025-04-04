@@ -1,6 +1,7 @@
 services:
   database:
     build: "pgsql/."
+    env_file: "pgsql/.env"
     restart: "always"
     ports:
       - "5433:5432"
