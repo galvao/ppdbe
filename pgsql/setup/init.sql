@@ -17,28 +17,27 @@ CREATE TABLE account_role (
 
 ALTER SEQUENCE account_role_id_seq OWNED BY account_role.id;
 
-CREATE SEQUENCE user_id_seq;
+CREATE SEQUENCE account_id_seq;
 
 CREATE TABLE account (
-                uid INTEGER NOT NULL DEFAULT nextval('user_id_seq'),
+                id INTEGER NOT NULL DEFAULT nextval('account_id_seq'),
                 role_id SMALLINT NOT NULL,
                 full_name VARCHAR(128) NOT NULL,
                 document VARCHAR(18) NOT NULL,
                 document_type CHAR(1) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 password CHAR(97) NOT NULL,
-                CONSTRAINT account_pk PRIMARY KEY (uid)
+                CONSTRAINT account_pk PRIMARY KEY (id)
 );
 COMMENT ON COLUMN account.document_type IS 'F or J';
 
+ALTER SEQUENCE account_id_seq OWNED BY account.id;
 
-ALTER SEQUENCE user_id_seq OWNED BY account.uid;
-
-CREATE UNIQUE INDEX user_idx
+CREATE UNIQUE INDEX user_document_type_uq
  ON account
  ( document, document_type );
 
-CREATE UNIQUE INDEX user_idx1
+CREATE UNIQUE INDEX user_email_uq
  ON account
  ( email );
 
@@ -59,40 +58,36 @@ CREATE TABLE transfer (
 ALTER SEQUENCE transfer_id_seq OWNED BY transfer.id;
 
 CREATE TABLE wallet (
-                user_id INTEGER NOT NULL,
+                account_id INTEGER NOT NULL,
                 balance NUMERIC(9,2) NOT NULL,
-                CONSTRAINT wallet_pk PRIMARY KEY (user_id)
+                CONSTRAINT wallet_pk PRIMARY KEY (account_id)
 );
 
 
-ALTER TABLE account ADD CONSTRAINT role_user_fk
+ALTER TABLE account ADD CONSTRAINT account_role_account_fk
 FOREIGN KEY (role_id)
 REFERENCES account_role (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE wallet ADD CONSTRAINT user_wallet_fk
-FOREIGN KEY (user_id)
-REFERENCES account (uid)
+ALTER TABLE wallet ADD CONSTRAINT account_wallet_fk
+FOREIGN KEY (account_id)
+REFERENCES account (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE transfer ADD CONSTRAINT user_transfer_fk
+ALTER TABLE transfer ADD CONSTRAINT account_transfer_payer_fk
 FOREIGN KEY (payer_id)
-REFERENCES account (uid)
+REFERENCES account (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE transfer ADD CONSTRAINT user_transfer_fk1
+ALTER TABLE transfer ADD CONSTRAINT account_transfer_payee_fk
 FOREIGN KEY (payee_id)
-REFERENCES account (uid)
+REFERENCES account (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
-
-\c postgres postgres;
-
-ALTER DATABASE ppdbe OWNER TO ppdbe;
