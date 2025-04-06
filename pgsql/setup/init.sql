@@ -27,6 +27,7 @@ CREATE TABLE account (
                 document_type CHAR(1) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 password CHAR(97) NOT NULL,
+                created TIMESTAMP NOT NULL,
                 CONSTRAINT account_pk PRIMARY KEY (id)
 );
 COMMENT ON COLUMN account.document_type IS 'F or J';
@@ -45,17 +46,30 @@ CREATE SEQUENCE transfer_id_seq;
 
 CREATE TABLE transfer (
                 id INTEGER NOT NULL DEFAULT nextval('transfer_id_seq'),
-                payee_id INTEGER NOT NULL,
                 payer_id INTEGER NOT NULL,
+                payee_id INTEGER NOT NULL,
                 identifier CHAR(36) NOT NULL,
                 amount NUMERIC(8,2) NOT NULL,
-                created TIMESTAMP NOT NULL,
-                confirmed TIMESTAMP,
                 CONSTRAINT transfer_pk PRIMARY KEY (id)
 );
 
 
 ALTER SEQUENCE transfer_id_seq OWNED BY transfer.id;
+
+CREATE SEQUENCE transfer_log_id_seq;
+
+CREATE TABLE transfer_log (
+                id BIGINT NOT NULL DEFAULT nextval('transfer_log_id_seq'),
+                transfer_id INTEGER NOT NULL,
+                status CHAR(1) NOT NULL,
+                retry SMALLINT DEFAULT 3 NOT NULL,
+                time_stamp TIMESTAMP NOT NULL,
+                CONSTRAINT transfer_log_pk PRIMARY KEY (id)
+);
+COMMENT ON COLUMN transfer_log.status IS 'Created,Pending,Approved,Failed,Denied';
+
+
+ALTER SEQUENCE transfer_log_id_seq OWNED BY transfer_log.id;
 
 CREATE TABLE wallet (
                 account_id INTEGER NOT NULL,
@@ -91,3 +105,21 @@ REFERENCES account (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
+ALTER TABLE transfer_log ADD CONSTRAINT transfer_transfer_log_fk
+FOREIGN KEY (transfer_id)
+REFERENCES transfer (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+INSERT INTO account_role (label) VALUES
+('Vendor'),
+('User');
+
+INSERT INTO account (role_id, full_name, document, document_type, email, password, created) VALUES
+((SELECT id FROM account_role WHERE label='User'), 'Er Galvão Abbott', '575.225.960-68', 'F', 'galvao@galvao.eti.br', '$argon2id$v=19$m=65536,t=4,p=1$dnh1eDBsRDNra0QyUDJmaA$MZJ0dBC8oPPXNZ9xTZPWxiV9aRQ2AIr9XqSoyarMF5E', (SELECT NOW())),
+((SELECT id FROM account_role WHERE label='Vendor'), 'Galvão Desenvolvimento Ltda.', '48.373.511/0001-85', 'J', 'atendimento@galvao.eti.br', '$argon2id$v=19$m=65536,t=4,p=1$akxlVFZVeVRLYmFXU0NCRg$OD6dAiWm7fMZXHJh58xJLqBiA8MpMXyJtvitkzHG+4w', (SELECT NOW()));
+
+INSERT INTO wallet (account_id, balance) VALUES ((SELECT id FROM account WHERE email='galvao@galvao.eti.br'), 100),
+INSERT INTO wallet (account_id, balance) VALUES ((SELECT id FROM account WHERE email='atendimento@galvao.eti.br'), 0);
