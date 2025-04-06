@@ -122,4 +122,4 @@ INSERT INTO account (role_id, full_name, document, document_type, email, passwor
 ((SELECT id FROM account_role WHERE label='Vendor'), 'Galvão Desenvolvimento Ltda.', '48.373.511/0001-85', 'J', 'atendimento@galvao.eti.br', '$argon2id$v=19$m=65536,t=4,p=1$akxlVFZVeVRLYmFXU0NCRg$OD6dAiWm7fMZXHJh58xJLqBiA8MpMXyJtvitkzHG+4w', (SELECT NOW()));
 
 INSERT INTO wallet (account_id, balance) VALUES ((SELECT id FROM account WHERE email='galvao@galvao.eti.br'), 100),
-INSERT INTO wallet (account_id, balance) VALUES ((SELECT id FROM account WHERE email='atendimento@galvao.eti.br'), 0);
+((SELECT id FROM account WHERE email='atendimento@galvao.eti.br'), 0);
