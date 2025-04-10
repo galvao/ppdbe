@@ -32,6 +32,7 @@ CREATE TABLE account (
 );
 COMMENT ON COLUMN account.document_type IS 'F or J';
 
+
 ALTER SEQUENCE account_id_seq OWNED BY account.id;
 
 CREATE UNIQUE INDEX user_document_type_uq
@@ -46,10 +47,10 @@ CREATE SEQUENCE transfer_id_seq;
 
 CREATE TABLE transfer (
                 id INTEGER NOT NULL DEFAULT nextval('transfer_id_seq'),
-                payer_id INTEGER NOT NULL,
-                payee_id INTEGER NOT NULL,
+                payer INTEGER NOT NULL,
+                payee INTEGER NOT NULL,
                 identifier CHAR(36) NOT NULL,
-                amount NUMERIC(8,2) NOT NULL,
+                value NUMERIC(8,2) NOT NULL,
                 CONSTRAINT transfer_pk PRIMARY KEY (id)
 );
 
@@ -66,7 +67,7 @@ CREATE TABLE transfer_log (
                 time_stamp TIMESTAMP NOT NULL,
                 CONSTRAINT transfer_log_pk PRIMARY KEY (id)
 );
-COMMENT ON COLUMN transfer_log.status IS 'Created,Pending,Approved,Failed,Denied';
+COMMENT ON COLUMN transfer_log.status IS 'Created,Pending,Approved,Failed,Denied,Notified';
 
 
 ALTER SEQUENCE transfer_log_id_seq OWNED BY transfer_log.id;
@@ -93,14 +94,14 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE transfer ADD CONSTRAINT account_transfer_payer_fk
-FOREIGN KEY (payer_id)
+FOREIGN KEY (payer)
 REFERENCES account (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE transfer ADD CONSTRAINT account_transfer_payee_fk
-FOREIGN KEY (payee_id)
+FOREIGN KEY (payee)
 REFERENCES account (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
@@ -121,5 +122,11 @@ INSERT INTO account (role_id, full_name, document, document_type, email, passwor
 ((SELECT id FROM account_role WHERE label='User'), 'Er Galvão Abbott', '575.225.960-68', 'F', 'galvao@galvao.eti.br', '$argon2id$v=19$m=65536,t=4,p=1$dnh1eDBsRDNra0QyUDJmaA$MZJ0dBC8oPPXNZ9xTZPWxiV9aRQ2AIr9XqSoyarMF5E', (SELECT NOW())),
 ((SELECT id FROM account_role WHERE label='Vendor'), 'Galvão Desenvolvimento Ltda.', '48.373.511/0001-85', 'J', 'atendimento@galvao.eti.br', '$argon2id$v=19$m=65536,t=4,p=1$akxlVFZVeVRLYmFXU0NCRg$OD6dAiWm7fMZXHJh58xJLqBiA8MpMXyJtvitkzHG+4w', (SELECT NOW()));
 
+UPDATE account SET id = 4 WHERE email='galvao@galvao.eti.br';
+UPDATE account SET id = 15 WHERE email='atendimento@galvao.eti.br';
+
 INSERT INTO wallet (account_id, balance) VALUES ((SELECT id FROM account WHERE email='galvao@galvao.eti.br'), 100),
 ((SELECT id FROM account WHERE email='atendimento@galvao.eti.br'), 0);
+
+\c postgres postgres
+ALTER USER ppdbe WITH PASSWORD 'ppdbe1234';

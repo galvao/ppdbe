@@ -1,0 +1,40 @@
+---
+openapi: 3.1.1
+info:
+  title: ppdbe
+  description: ppdbe
+  contact:
+    name: Er Galvão Abbott
+    url: https://github.com/galvao/ppdbe
+    email: galvao@php.net
+  license:
+    name: Apache License 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: 0.1.0
+servers:
+  - url: http://foo
+tags:
+  - name: transfer
+paths:
+  /transfer:
+    post:
+      operationId: postTransfer
+      tags:
+        - transfer
+      summary: Transfers amount between accounts
+      description: Transfers maney between a regular user and either another regular user or a vendor
+      requestBody:
+        description: the body of the request
+        content:
+          application/json:
+            examples:
+              validTransfer:
+                value:
+                  {
+                    value: 100.0,
+                    payer: 12,
+                    payee: 2
+                  }
+      responses:
+        '200':
+          description: Successful transfer

@@ -101,16 +101,16 @@
     <column id="COL28" populated="true" UUID="243c319f-c020-479b-aeb1-78998863da04" autoIncrement="true" autoIncrementSequenceName="transfer_id_seq" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL29" populated="true" UUID="6b7a2c82-7618-4ed5-8c59-e739718aba67" autoIncrement="false" autoIncrementSequenceName="user_id_seq" defaultValue="" name="payer_id" nullable="0" physicalName="payer_id" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL29" populated="true" UUID="6b7a2c82-7618-4ed5-8c59-e739718aba67" autoIncrement="false" autoIncrementSequenceName="user_id_seq" defaultValue="" name="payer" nullable="0" physicalName="payer" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL30" populated="true" UUID="fe54eaa1-9613-47bb-a6e1-c7590f33b581" autoIncrement="false" autoIncrementSequenceName="user_id_seq" defaultValue="" name="payee_id" nullable="0" physicalName="payee_id" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL30" populated="true" UUID="fe54eaa1-9613-47bb-a6e1-c7590f33b581" autoIncrement="false" autoIncrementSequenceName="user_id_seq" defaultValue="" name="payee" nullable="0" physicalName="payee" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     <column id="COL31" populated="true" UUID="f6e730f3-785c-4764-9cd0-aedf56834409" autoIncrement="false" autoIncrementSequenceName="transfer_identifier_seq" defaultValue="" name="identifier" nullable="0" physicalName="identifier" precision="36" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="67ddc63f-5541-4dd1-9236-632d9d155e80" >
      <remarks></remarks>
     </column>
-    <column id="COL32" populated="true" UUID="715a35bb-fa2b-4153-8fd5-20946d386922" autoIncrement="false" autoIncrementSequenceName="transfer_amount_seq" defaultValue="" name="amount" nullable="0" physicalName="amount" precision="8" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+    <column id="COL32" populated="true" UUID="715a35bb-fa2b-4153-8fd5-20946d386922" autoIncrement="false" autoIncrementSequenceName="transfer_amount_seq" defaultValue="" name="value" nullable="0" physicalName="value" precision="8" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
     </folder>
@@ -179,9 +179,9 @@
   <table-pane table-ref="TAB17" x="319" y="55" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB22" x="306" y="426" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB27" x="629" y="186" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB35" x="629" y="367" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-link relationship-ref="REL43" pkConnection="0.5338983050847458" fkConnection="0.4827586206896552" rLineColor="0x333333" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL49" pkConnection="0.4827586206896552" fkConnection="0.4915254237288136" rLineColor="0x333333" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-pane table-ref="TAB35" x="621" y="364" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL43" pkConnection="0.5338983050847458" fkConnection="0.48878923766816146" rLineColor="0x333333" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL49" pkConnection="0.49142857142857144" fkConnection="0.4915254237288136" rLineColor="0x333333" pkLabelText="" fkLabelText="" orientation="132"/>
   <table-link relationship-ref="REL45" pkConnection="0.2740740740740741" fkConnection="0.3523809523809524" rLineColor="0x333333" pkLabelText="" fkLabelText="" orientation="33"/>
   <table-link relationship-ref="REL47" pkConnection="0.37037037037037035" fkConnection="0.8" rLineColor="0x333333" pkLabelText="" fkLabelText="" orientation="33"/>
   <table-link relationship-ref="REL51" pkConnection="0.49" fkConnection="0.4666666666666667" rLineColor="0x333333" pkLabelText="" fkLabelText="" orientation="132"/>
